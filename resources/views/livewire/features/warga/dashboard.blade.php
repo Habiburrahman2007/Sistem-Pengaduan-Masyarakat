@@ -74,15 +74,64 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Profile Visit</h4>
+                        <h4>Laporan per Bulan ({{ date('Y') }})</h4>
                     </div>
                     <div class="card-body">
-                        <div id="chart-profile-visit"></div>
+                        <div id="chart-laporan-bulanan"></div>
                     </div>
                 </div>
+
+                <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+                <script>
+                    document.addEventListener("livewire:navigated", function() {
+                        var options = {
+                            chart: {
+                                type: 'bar',
+                                height: 350,
+                                stacked: false
+                            },
+                            series: [{
+                                    name: 'Proses',
+                                    data: @json($laporanProses),
+                                    color: '#facc15' // kuning
+                                },
+                                {
+                                    name: 'Pending',
+                                    data: @json($laporanPending),
+                                    color: '#ef4444' // merah
+                                },
+                                {
+                                    name: 'Selesai',
+                                    data: @json($laporanSelesai),
+                                    color: '#22c55e' // hijau
+                                }
+                            ],
+                            xaxis: {
+                                categories: [
+                                    'Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun',
+                                    'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'
+                                ]
+                            },
+                            plotOptions: {
+                                bar: {
+                                    horizontal: false,
+                                    columnWidth: '60%',
+                                }
+                            },
+                            dataLabels: {
+                                enabled: true
+                            }
+                        };
+
+                        var chart = new ApexCharts(document.querySelector("#chart-laporan-bulanan"), options);
+                        chart.render();
+                    });
+                </script>
+
             </div>
         </div>
     </div>
+
     <div class="col-12 col-lg-3">
         <div class="card">
             <div class="card-body py-4 px-4">

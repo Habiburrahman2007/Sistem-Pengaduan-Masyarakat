@@ -1,4 +1,4 @@
-<section class="row" wire.poll>
+<section class="row" wire:poll>
     <div class="col-12 col-lg-9">
         <div class="row">
             <div class="col-6 col-lg-3 col-md-6">
@@ -12,12 +12,13 @@
                             </div>
                             <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                 <h6 class="text-muted font-semibold">Laporan Pending</h6>
-                                <h6 class="font-extrabold mb-0">{{ $laporanpending }}</h6>
+                                <h6 class="font-extrabold mb-0">{{ $laporanPendingCount }}</h6>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="col-6 col-lg-3 col-md-6">
                 <div class="card">
                     <div class="card-body px-4 py-4-5">
@@ -29,12 +30,13 @@
                             </div>
                             <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                 <h6 class="text-muted font-semibold">Laporan Proses</h6>
-                                <h6 class="font-extrabold mb-0">{{ $laporanproses }}</h6>
+                                <h6 class="font-extrabold mb-0">{{ $laporanProsesCount }}</h6>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="col-6 col-lg-3 col-md-6">
                 <div class="card">
                     <div class="card-body px-4 py-4-5">
@@ -46,12 +48,13 @@
                             </div>
                             <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                 <h6 class="text-muted font-semibold">Laporan Selesai</h6>
-                                <h6 class="font-extrabold mb-0">{{ $laporanselesai }}</h6>
+                                <h6 class="font-extrabold mb-0">{{ $laporanSelesaiCount }}</h6>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="col-6 col-lg-3 col-md-6">
                 <div class="card">
                     <div class="card-body px-4 py-4-5">
@@ -63,26 +66,76 @@
                             </div>
                             <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                 <h6 class="text-muted font-semibold">Total Laporan</h6>
-                                <h6 class="font-extrabold mb-0">{{ $totallaporan }}</h6>
+                                <h6 class="font-extrabold mb-0">{{ $laporanTotalCount }}</h6>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
+
+        <!-- Chart Laporan -->
+        <div class="row mt-4">
             <div class="col-12">
-                <div class="card">
+                <div class="card" wire:ignore>
                     <div class="card-header">
-                        <h4>Profile Visit</h4>
+                        <h4>Laporan per Bulan ({{ date('Y') }})</h4>
                     </div>
                     <div class="card-body">
-                        <div id="chart-profile-visit"></div>
+                        <div id="chart-laporan-bulanan"></div>
                     </div>
                 </div>
+
+                <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+                <script>
+                    document.addEventListener("livewire:navigated", function() {
+                        var options = {
+                            chart: {
+                                type: 'bar',
+                                height: 350,
+                                stacked: false
+                            },
+                            series: [{
+                                    name: 'Proses',
+                                    data: @json($laporanProses),
+                                    color: '#facc15' // kuning
+                                },
+                                {
+                                    name: 'Pending',
+                                    data: @json($laporanPending),
+                                    color: '#ef4444' // merah
+                                },
+                                {
+                                    name: 'Selesai',
+                                    data: @json($laporanSelesai),
+                                    color: '#22c55e' // hijau
+                                }
+                            ],
+                            xaxis: {
+                                categories: [
+                                    'Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun',
+                                    'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'
+                                ]
+                            },
+                            plotOptions: {
+                                bar: {
+                                    horizontal: false,
+                                    columnWidth: '60%',
+                                }
+                            },
+                            dataLabels: {
+                                enabled: true
+                            }
+                        };
+
+                        var chart = new ApexCharts(document.querySelector("#chart-laporan-bulanan"), options);
+                        chart.render();
+                    });
+                </script>
             </div>
         </div>
     </div>
+
     <div class="col-12 col-lg-3">
         <div class="card">
             <div class="card-body py-4 px-4">
@@ -97,11 +150,11 @@
                 </div>
             </div>
         </div>
-        <div class="card">
+        <div class="card mt-4">
             <div class="card-header">
                 <h4>Visitors Profile</h4>
             </div>
-            <div class="card-body">
+            <div class="card-body" wire:ignore>
                 <div id="chart-visitors-profile"></div>
             </div>
         </div>
