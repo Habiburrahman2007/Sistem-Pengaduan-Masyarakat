@@ -14,7 +14,7 @@ Route::prefix('auth')->group(function () {
     Route::get('/login', Login::class)->name('login');
 });
 
-Route::middleware('auth')->prefix('admin')->group(function () {
+Route::prefix('admin')->group(function () {
     Route::get('/', Features\Dashboard::class)->name('admin.dashboard');
     Route::get('/list-laporan', Features\ListLaporan::class)->name('admin.list-laporan');
     Route::get('/list-warga', Features\ListWarga::class)->name('admin.list-warga');
@@ -23,7 +23,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/laporan/detail/{id}', Features\Admin\LaporanDetail::class)->name('admin.detail-laporan');
 });
 
-Route::middleware('auth')->prefix('warga')->group(function () {
+Route::prefix('warga')->group(function () {
     Route::get('/', Features\warga\Dashboard::class)->name('warga.dashboard');
     //CRUD Laporan
     Route::get('/laporan', Features\warga\Laporan::class)->name('warga.laporan');
