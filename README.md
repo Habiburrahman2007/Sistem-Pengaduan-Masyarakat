@@ -1,8 +1,6 @@
 ## 📝 Deskripsi Singkat
 Proyek ini adalah website portofolio pribadi yang dibuat untuk menampilkan profil, keahlian, dan proyek-proyek yang pernah dikerjakan oleh Muhammad Habiburrahman Al Arif. Website ini dirancang sebagai single-page application (SPA) yang sederhana, bersih, dan sepenuhnya responsif, sehingga dapat diakses dengan baik di berbagai perangkat, mulai dari desktop hingga mobile.
 
-Desainnya modern dengan tema warna merah, mencerminkan semangat seorang mahasiswa yang baru memulai karir di bidang pengembangan web.
-
 ## 🚀 Teknologi yang Digunakan
 Website ini dibangun murni menggunakan teknologi front-end dasar, tanpa memerlukan framework atau library yang kompleks.
 
